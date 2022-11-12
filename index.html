@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML Bubblewrap</title>
     <style>
-        body{
-            font-family: sans-serif;
-            white-space:nowrap;
-            text-align: center;
-            background-color: rgb(255, 255, 255);
-        }
+        
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
-        button{
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: aliceblue;
-        }
+      body {
+        font-family: sans-serif;
+        white-space: nowrap;
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+      }
+
+      button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: aliceblue;
+      }
+
+      h1 {
+        align-items: center;
+        font-size: 75px;
+        margin-bottom: 0px;
+      }
+
+      h3 {
+        margin-top: 0px;
+        font-size: 25px;
+      }
+
+      .bubbles {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      * {
+        font-family: 'Amatic SC', cursive;
+        font-weight: 700;
+      }
     </style>
-</head>
-<body>
-    <audio id = "chill" src="Underwater Exploration - Godmode.mp3" loop></audio>
-    <button onclick = "firstClick(event)"></button>
-</body>
-<script>
+  </head>
+
+  <body>
+    <h1>HTML Bubble Wrap</h1>
+    <h3>pop to your heart's content</h3>
+    <audio id="chill" src="Underwater Exploration - Godmode.mp3" loop></audio>
+    <audio id="pop" src="QKTA234-pop.mp3"></audio>
+    <div class="bubbles"></div>
+  </body>
+  <script>
     const body = document.querySelector("body");
     const audio = document.querySelector("#chill");
-    
-    function firstClick(event) {
+    const poppy = document.querySelector("#pop");
+    const bubbles = document.querySelector(".bubbles");
+
+    for (var i = 0; i < 1000; i++) {
+      //   if (i % 20 == 0) {
+      //     const newlinebreak = document.createElement("br");
+      //     //bubbles.appendChild(newlinebreak);
+      //   }
+      const newbutton = document.createElement("button");
+      //bubbles.appendChild(newbutton);
+      newbutton.onclick = (event) => {
+        const newSound = poppy.cloneNode();
         audio.play();
-        event.target.style.opacity=0;
+        newSound.play();
+        event.target.style.opacity = 0;
+        event.target.disabled = true;
+      };
+      bubbles.appendChild(newbutton);
     }
 
-    for(var i = 1; i<1000; i++) {
-        if(i%20==0) {
-        const newlinebreak = document.createElement("br");
-        body.appendChild(newlinebreak);
-    }
+    window.onscroll = function () {
+    if ((window.innerHeight + window.scrollY) >= 0.9 * document.body.scrollHeight) {
+        for(var i = 0; i < 400; i++) {
         const newbutton = document.createElement("button");
-        newbutton.onclick = (errvent) => {
-            errvent.target.style.opacity=0;
-        }
-        body.appendChild(newbutton);
+      //bubbles.appendChild(newbutton);
+      newbutton.onclick = (event) => {
+        const newSound = poppy.cloneNode();
+        audio.play();
+        newSound.play();
+        event.target.style.opacity = 0;
+        event.target.disabled = true;
+      };
+      bubbles.appendChild(newbutton);
     }
-</script>
+    }
+    };
+  </script>
 </html>
