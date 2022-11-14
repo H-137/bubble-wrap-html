@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML Bubblewrap</title>
     <style>
-        
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
       * {
-        font-family: 'Amatic SC', cursive;
+        font-family: "Amatic SC", cursive;
         font-weight: 700;
       }
 
@@ -59,29 +58,51 @@
         border: none;
         font-size: 20px;
         border-radius: 3px;
-
       }
 
-      .muter > input:hover{
+      .muter > input:hover {
         background-color: lightgrey;
         transform: scale(1.05);
       }
 
+      .counter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 10px;
+        padding: 0px;
+        font-size: 20px;
+        font-family: "open sans";
+      }
 
-      
+      .counter > * {
+        font-size: 20px;
+        font-family: "open sans";
+      }
     </style>
   </head>
 
   <body>
-    <div class = "muter">
-      <input type="button" onclick="muter(event)" value = "Music: On">
+    <div class="counter">
+      Bubbles popped: <span id="numPopped">0</span>
     </div>
-    
+    <div class="muter">
+      <input type="button" onclick="muter(event)" value="Music: On" />
+      <input
+        type="range"
+        id="volume"
+        min="0"
+        max="1"
+        step="0.1"
+        onchange="changeVolume(event)"
+      />
+    </div>
+
     <div class="header">
       <h1>HTML Bubble Wrap</h1>
-    <h3>pop to your heart's content</h3>
+      <h3>pop to your heart's content</h3>
     </div>
-    
+
     <audio id="chill" src="Underwater Exploration - Godmode.mp3" loop></audio>
     <audio id="pop" src="QKTA234-pop.mp3"></audio>
     <div class="bubbles"></div>
@@ -90,7 +111,17 @@
     const body = document.querySelector("body");
     const audio = document.querySelector("#chill");
     const poppy = document.querySelector("#pop");
-    const bubbles = document.querySelector(".bubbles")
+    const bubbles = document.querySelector(".bubbles");
+    const count = document.querySelector("#numPopped");
+    if(localStorage.getItem("countLocal") === null){
+      localStorage.setItem("countLocal", 0);
+    }
+    count.innerHTML = localStorage.getItem("countLocal");
+
+    function updateCount() {
+      count.innerHTML = parseInt(count.innerHTML) + 1;
+      localStorage.setItem("countLocal", count.innerHTML);
+    }
 
     for (var i = 0; i < 1000; i++) {
       //   if (i % 20 == 0) {
@@ -103,6 +134,7 @@
         const newSound = poppy.cloneNode();
         audio.play();
         newSound.play();
+        updateCount();
         event.target.style.opacity = 0;
         event.target.disabled = true;
       };
@@ -119,21 +151,30 @@
       }
     }
 
+    function changeVolume(event) {
+      audio.volume = event.target.value;
+      console.log(event.target.value);
+    }
+
     window.onscroll = function () {
-    if ((window.innerHeight + window.scrollY) >= 0.9 * document.body.scrollHeight) {
-        for(var i = 0; i < 400; i++) {
-        const newbutton = document.createElement("button");
-      //bubbles.appendChild(newbutton);
-      newbutton.onclick = (event) => {
-        const newSound = poppy.cloneNode();
-        audio.play();
-        newSound.play();
-        event.target.style.opacity = 0;
-        event.target.disabled = true;
-      };
-      bubbles.appendChild(newbutton);
-    }
-    }
+      if (
+        window.innerHeight + window.scrollY >=
+        0.9 * document.body.scrollHeight
+      ) {
+        for (var i = 0; i < 400; i++) {
+          const newbutton = document.createElement("button");
+          //bubbles.appendChild(newbutton);
+          newbutton.onclick = (event) => {
+            const newSound = poppy.cloneNode();
+            audio.play();
+            newSound.play();
+            event.target.style.opacity = 0;
+            event.target.disabled = true;
+          };
+          bubbles.appendChild(newbutton);
+        }
+      }
     };
   </script>
+  \
 </html>
